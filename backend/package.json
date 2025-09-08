@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "node main.js",
+    "dev": "nodemon main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/LKQMLR/cityvap.git"
+  },
+  "author": "LKQMLR",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LKQMLR/cityvap/issues"
+  },
+  "homepage": "https://github.com/LKQMLR/cityvap#readme",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0"
+  }
+}
