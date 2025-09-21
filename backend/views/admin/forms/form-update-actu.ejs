@@ -1,0 +1,30 @@
+<%- include('../partials/admin-header') %>
+
+<%- include('../partials/admin-menu') %>
+
+<h2>Modifier une actualité</h2>
+
+    <form action="" method="">
+      <select name="place" id="place">
+        <option value="all">Toutes les boutiques</option>
+        <option value="clisson">Clisson</option>
+        <option value="vallet">Vallet</option>
+        <option value="aigrefeuille">Aigrefeuille sur maine</option>
+      </select>
+
+      <label for="title">Titre de l'actu</label>
+      <input type="text" name="title" id="title" value="<%= title %>" />
+
+      <label for="content">contenu de l'actualité</label>
+      <textarea name="content" id="content"><%= content %></textarea>
+
+      <button type="submit">Enregistrer</button>
+
+      <% if (success) { %>
+      <p style="color: green"><%= success %></p>
+      <% } %> 
+      <% if (error) { %>
+      <p style="color: red"><%= error %></p>
+      <% } %>
+    </form>
+<%- include('../partials/admin-footer') %>

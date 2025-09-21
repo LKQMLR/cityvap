@@ -1,0 +1,36 @@
+<%- include('../partials/admin-header') %>
+
+<h1>PAGE ACTUALITES</h1>
+
+<%- include('../partials/admin-menu') %> 
+
+<% if(success) { %>
+  <p style="color: green;"><%= success %></p>
+<%}%>
+<% if(error) { %>
+  <p style="color: red;"><%= error %></p>
+<%}%>
+
+<% if(dbConnected) { %>
+  <button><a href="/admin/actualites/create">Ajouter</a></button>
+<%}%>
+
+<% news.forEach((item) => { %>
+  <ul style="list-style: none; display: flex; gap: 20px; border: 2px solid black; width: fit-content; padding: 5px;">
+    <li><span style="font-weight: bold;">ID : </span><%= item.id %></li>
+    <li><span style="font-weight: bold;">Lieu : </span><%= item.place %></li>
+    <li><span style="font-weight: bold;">Titre : </span><%= item.title %></li>
+    <li><span style="font-weight: bold;">Information : </span><%= item.content %></li>
+    <li><span style="font-weight: bold;">Publié : </span><%= item.visible %></li>
+    <li><span style="font-weight: bold;">Date de création : </span><%= item.created_at.toISOString().slice(0,10) %></li>
+    <li><a href="/admin/actualites/<%= item.id %>/edit">MODIFIER</a></li>
+    <li>
+      <form action="/admin/actualites/<%= item.id %>/delete" method="POST">
+        <button style="color: red;">SUPPRIMER</button>
+      </form>
+    </li>
+  </ul>
+<%})%>
+
+
+<%- include('../partials/admin-footer') %>
