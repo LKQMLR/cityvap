@@ -34,8 +34,9 @@ export const createNews = async (
       VALUES (?, ?, ?, ?, ?)`,
       [place, title, content, false, new Date().toISOString().slice(0, 10)]
     );
+    return result.sqlResponse;
   } catch (err) {
-    console.error("Erreur from createNews:", err.message);
+    console.error(err.message);
     throw err
   }
 };

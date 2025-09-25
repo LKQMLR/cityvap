@@ -1,23 +1,17 @@
-import {
-  createNews,
-  deleteNewsById,
-  getAllNews,
-  getNewsById,
-  updateNewsById,
-} from "../models/newsModel.js";
+import { createNews, deleteNewsById, getAllNews, getNewsById, updateNewsById } from "../models/newsModel.js";
 
 // ============================ PAGES ============================
 
-// page actualité & listing de toute les actualités
+// page actualité & listing de toutes les actualités
 export const pageNews = async (req, res) => {
   try {
     const data = await getAllNews();
-    res.status(200).render('admin/pages_content/news-list', {
+    res.status(200).render("admin/pages_content/panel-news", {
       news: data,
       dbConnected: true,
     });
   } catch (err) {
-    res.status(500).render(`admin/pages_content/news-list`, {
+    res.status(500).render(`admin/pages_content/panel-news`, {
       news: [],
       error: "Serveur momentanément indisponible. Veuillez réessayer plus tard.",
       dbConnected: false,
@@ -26,7 +20,7 @@ export const pageNews = async (req, res) => {
 };
 // Formulaire création d'une actualité
 export const formCreateNews = (req, res) => {
-  res.render('admin/forms/form-news-create', {
+  res.render("admin/forms/form-news-create", {
     place: "",
     title: "",
     content: "",
@@ -39,42 +33,51 @@ export const formUpdateNews = async (req, res) => {
   try {
     const result = await getNewsById(id);
 
-    if(!result[0]) {
-      return res.status(404).render('admin/forms/form-news-update', {
+    if (!result[0]) {
+      return res.status(404).render("admin/forms/form-news-update", {
         id,
         place: "",
         title: "",
         content: "",
         error: `Actualité introuvable. [id:${id}]`,
         dbConnected: false,
-      })
+      });
     }
 
-    return res.status(200).render('admin/forms/form-news-update', {
+    return res.status(200).render("admin/forms/form-news-update", {
       id,
       place: result[0].place,
       title: result[0].title,
       content: result[0].content,
       dbConnected: true,
-    })
-
-  }catch(err) {
-    return res.status(303).redirect('/admin/actualites')
+    });
+  } catch (err) {
+    return res.status(303).redirect("/admin/actualites");
   }
 };
 
 // ============================ CRUD ============================
 
-// création actualité
+// CREER ACTUALITE
 export const addNews = async (req, res) => {
   const { place, title, content } = req.body;
 
   if (!place || !title || !content) {
-    return res.status(400).render('admin/forms/form-news-create', {
+    return res.status(400).render("admin/forms/form-news-create", {
       place,
       title,
       content,
       error: "Certains champs sont manquants.",
+      dbConnected: true,
+    });
+  }
+
+  if (title.length > 255 || content.length > 255) {
+    return res.status(400).render("admin/forms/form-news-create", {
+      place,
+      title,
+      content,
+      error: "Un des champs dépasse la longueur maximale autorisée. (255 max)",
       dbConnected: true,
     });
   }
@@ -84,31 +87,42 @@ export const addNews = async (req, res) => {
     req.session.success = "Nouvelle actualité ajoutée : pensez à la mettre en ligne.";
     return res.status(303).redirect("/admin/actualites");
   } catch (err) {
-    return res.status(303).redirect('/admin/actualites')
+    return res.status(303).redirect("/admin/actualites");
   }
 };
 // MODIFIER ACTUALITE
 export const updateNews = async (req, res) => {
-  const {place, title, content} = req.body;
-  const id = req.params.id
+  const { place, title, content } = req.body;
+  const id = req.params.id;
 
-  if(!place || !title || !content) {
+  if (!place || !title || !content) {
     return res.status(400).render(`admin/forms/form-news-update`, {
-    id,
-    place,
-    title,
-    content,
-    error: "Certains champs sont manquants",
-    dbConnected: true,
+      id,
+      place,
+      title,
+      content,
+      error: "Certains champs sont manquants",
+      dbConnected: true,
+    });
+  }
+
+  if (title.length > 255 || content.length > 255) {
+    return res.status(400).render("admin/forms/form-news-update", {
+      id,
+      place,
+      title,
+      content,
+      error: "Un des champs dépasse la longueur maximale autorisée. (255 max)",
+      dbConnected: true,
     });
   }
 
   try {
     await updateNewsById(id, place, title, content);
-    req.session.success = "La modification a bien été effectuée."
-    return res.status(303).redirect('/admin/actualites')
-  }catch(err) {
-    return res.status(303).redirect('/admin/actualites')
+    req.session.success = "La modification a bien été effectuée.";
+    return res.status(303).redirect("/admin/actualites");
+  } catch (err) {
+    return res.status(303).redirect("/admin/actualites");
   }
 };
 

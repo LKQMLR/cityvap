@@ -1,0 +1,26 @@
+<%- include('../partials/admin-header') %>
+
+<%- include('../partials/admin-menu') %>
+
+<h2>Modifier une bannière promotionnelle.</h2>
+
+
+<% if(error) {%>
+  <p style="color: red;"><%= error %></p>
+<%}%>
+
+<% if(dbConnected) {%>
+  <p>ID: <%=id%></p>
+  <form action="/admin/promotions/<%= id %>/edit" method="POST" enctype="multipart/form-data">
+
+    <label for="title">Titre</label>
+    <input type="text" name="title" id="title" value="<%= title || '' %>">
+
+    <label for="upload_file">Choisissez une image</label>
+    <input type="file" name="upload_file" id="upload_file">
+
+    <button type="submit">Valider la modification</button>
+  </form>
+<%}%>
+
+<%- include('../partials/admin-footer') %>

@@ -1,0 +1,32 @@
+<%- include('../partials/admin-header') %>
+
+<h1>SLIDERS</h1>
+<%- include('../partials/admin-menu') %>
+
+<% if(success) { %>
+  <p style="color: green;"><%= success %></p>
+<%}%>
+<% if(error) { %>
+  <p style="color: red;"><%= error %></p>
+<%}%>
+
+<% if(dbConnected) { %>
+<button><a href="/admin/promotions/create">AJOUTER</a></button>
+<%}%>
+<% promotions.forEach(promo => { %>
+  <ul style="list-style: none; display: flex; gap: 20px; border: 2px solid black; width: fit-content; padding: 5px;">
+    <li><%= promo.title %></li>
+    <li>
+      <img src="/uploads/img_sliders/<%= promo.image %>" alt="" style="max-width:150px;">
+    </li>
+    <li><%= promo.position %></li>
+    <li><a href="/admin/promotions/<%= promo.id %>/edit">MODIFIER</a></li>
+    <li>
+      <form action="/admin/promotions/<%= promo.id %>/delete" method="POST">
+        <button style="color: red;">SUPPRIMER</button>
+      </form>
+    </li>
+  </ul>
+<% }) %>
+
+<%- include('../partials/admin-footer') %>
