@@ -9,18 +9,17 @@
 
 <% if(dbConnected) {%>
 <form action="/admin/promotions" method="POST" enctype="multipart/form-data">
-  
+
   <label for="title">Titre</label>
   <input type="text" name="title" id="title" value="<%= title || ''%>">
 
   <label for="upload_file">Choisissez une image</label>
   <input type="file" name="upload_file" id="upload_file">
 
-
   <label for="position">Position</label>
   <input type="number" name="position" min="1" max="4" value="<%= position || ''%>">
 
-  <input type="submit">
+  <button type="submit">Valider</button>
 
 </form>
 <%}%>

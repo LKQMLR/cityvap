@@ -1,7 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
 import { createPromotions, deletePromotionById, getAllPromotions, getPromotionById, updatePromotionById } from "../models/promotionsModel.js";
-import { title } from "process";
 // ============================ PAGES ============================
 
 // page promotion & listing de toutes les promotions
@@ -30,7 +29,6 @@ export const formUpdatePromotion = async (req, res) => {
     if (!result[0]) {
       return res.status(404).render("admin/forms/form-promo-update", {
         id,
-        title,
         error: `Bannière promotionnelle introuvable [id:${id}]`,
         dbConnected: false,
       });
@@ -114,7 +112,7 @@ export const updatePromotion = async (req, res) => {
   }
 
   if (title.length > 255) {
-    return res.status(400).render("admin/forms/form-promo-create", {
+    return res.status(400).render("admin/forms/form-promo-update", {
       title,
       image,
       error: "Un des champs dépasse la longueur maximal autorisée. (255 max)",

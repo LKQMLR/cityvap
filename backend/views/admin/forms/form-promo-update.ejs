@@ -10,7 +10,6 @@
 <%}%>
 
 <% if(dbConnected) {%>
-  <p>ID: <%=id%></p>
   <form action="/admin/promotions/<%= id %>/edit" method="POST" enctype="multipart/form-data">
 
     <label for="title">Titre</label>
